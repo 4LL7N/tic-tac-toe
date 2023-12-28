@@ -17,15 +17,9 @@ interface Context{
     setPageParams:any
   }
 
-// interface change{
-//     used:boolean,
-//     OX:string
-// }  
-
 function Game(){
 
     const params = useParams()
-    // console.log(params.game);
     const move = useRef(0)
     const P1 = useRef(0)
     const tie = useRef(0)
@@ -37,21 +31,6 @@ function Game(){
 
     let change:string[]|undefined= []
     const context = useContext<Context>(Tiktaktoe)
-
-    // useEffect(()=>{
-    //     // if(params.game == "sologame"){
-    //     //     if(!context.playWith){
-    //     //         context.setPlayWith(true);
-                
-    //     //         // CPU()
-    //     //     }
-    //     // }
-    //     if (context.playWith == false){
-
-    //     }
-    //     context.setPlayWith(true)
-
-    // },[])
 
     context.setPageParams(params.game)
     
@@ -70,22 +49,12 @@ function Game(){
         
             if(space <= 8 ){
                 change = [...context.Gamebox];
-                console.log(change[random] + " ?"+random);
                 while(change[random]){
                     random = Math.floor(Math.random() * 9)
-                    console.log("change randmo "+change[random] + " ?"+random);
-                    console.log("space "+space)
                 }
-                // if(count.current == 1 && !context.playWith){
-                //     change[random] = "/images/icon-x.svg"
-                //     context.setGamebox([...change]);
-                //     // context.setPlayWith(!context.playWith)
-                //     space = 0
-                //     return
-                // }
+                
                 change[random] = !context.playWith  ?"/images/icon-x.svg":"/images/icon-o.svg"
                 context.setGamebox([...change]);
-                // context.setPlayWith(!context.playWith)
                 space = 0
             }
     }
@@ -108,29 +77,12 @@ function Game(){
             CPU()
         }
     },[PCmove])
-    console.log(count.current);
-    console.log(context.playWith);
     
-    
-
-    
-
-
     function win(){
-        
-        
-        
         let a = 0
-
         move.current += 1
-
-        // console.log(context.Gamebox[a+2]);
-        // console.log(context.Gamebox[a+4]);
-        // console.log(context.Gamebox[a+6]);
-
         for (let i = 0 ; i < 3 ; i ++){
             if(context.Gamebox[a+2] && context.Gamebox[a+1] && context.Gamebox[a] && context.Gamebox[a] == context.Gamebox[a+1] && context.Gamebox[a+1] == context.Gamebox[a+2]){
-                console.log(a/3 + "horizontal win")
                 context.setWinner(context.Gamebox[a])
                 if(context.Gamebox[a] == "/images/icon-x.svg"){
                     P1.current += 1
@@ -146,7 +98,6 @@ function Game(){
 
         for (let i = 0 ; i < 3 ; i ++){
             if(context.Gamebox[a+6] && context.Gamebox[a+3] && context.Gamebox[a] && context.Gamebox[a] == context.Gamebox[a+3] && context.Gamebox[a+3] == context.Gamebox[a+6]){
-                console.log(a + "vertical win")
                 context.setWinner(context.Gamebox[a])
                 if(context.Gamebox[a] == "/images/icon-x.svg"){
                     P1.current += 1
@@ -159,7 +110,6 @@ function Game(){
         }
         a = 0
         if(context.Gamebox[a+8] && context.Gamebox[a+4] && context.Gamebox[a] && context.Gamebox[a] == context.Gamebox[a+4] && context.Gamebox[a+4] == context.Gamebox[a+8]){
-            console.log("first diagonal win");
             context.setWinner(context.Gamebox[a])
             if(context.Gamebox[a] == "/images/icon-x.svg"){
                 P1.current += 1
@@ -169,7 +119,6 @@ function Game(){
             move.current = 0
         }
         if(context.Gamebox[a+6] && context.Gamebox[a+4] && context.Gamebox[a+2] && context.Gamebox[a+2] == context.Gamebox[a+4] && context.Gamebox[a+4] == context.Gamebox[a+6]){
-            console.log("second diagonal win");
             context.setWinner(context.Gamebox[a+2])
             if(context.Gamebox[a] == "/images/icon-x.svg"){
                 P1.current += 1
@@ -179,7 +128,6 @@ function Game(){
             move.current = 0
         }
         if(move.current == 10){
-            console.log("tie");
             context.setWinner("tie")
             tie.current += 1
         }
@@ -204,20 +152,7 @@ function Game(){
                 </header>
                 <section>
                     <div className="flex flex-wrap gap-x-[20px] gap-y-[20px] " >
-                        {/* <div className=" flex items-center justify-center w-[96px] h-[88px] rounded-[10px] bg-[#1F3641] shadow-[0px_4px_0px_0px_#10212A] " onClick={() => {change = [...Gamebox], change[0] = true,console.log(change) ,setGamebox([...change]),context.setPlayWith(!context.playWith)}}  ><img src={Gamebox[0] == true?context.playWith?"/images/icon-x.svg":"/images/icon-o.svg":""} /></div>
-                        <div className=" flex items-center justify-center w-[96px] h-[88px] rounded-[10px] bg-[#1F3641] shadow-[0px_4px_0px_0px_#10212A] " onClick={() => {change = [...Gamebox], change[1] = true,console.log(change) ,setGamebox([...change]),context.setPlayWith(!context.playWith)}}  ><img src={Gamebox[1] == true?context.playWith?"/images/icon-x.svg":"/images/icon-o.svg":""} /></div>
-                        <div className=" flex items-center justify-center w-[96px] h-[88px] rounded-[10px] bg-[#1F3641] shadow-[0px_4px_0px_0px_#10212A] " onClick={() => {change = [...Gamebox], change[2] = true,console.log(change) ,setGamebox([...change]),context.setPlayWith(!context.playWith)}}  ><img src={Gamebox[2] == true?context.playWith?"/images/icon-x.svg":"/images/icon-o.svg":""} /></div>
-                        <div className=" flex items-center justify-center w-[96px] h-[88px] rounded-[10px] bg-[#1F3641] shadow-[0px_4px_0px_0px_#10212A] " onClick={() => {change = [...Gamebox], change[3] = true,console.log(change) ,setGamebox([...change]),context.setPlayWith(!context.playWith)}}  ><img src={Gamebox[3] == true?context.playWith?"/images/icon-x.svg":"/images/icon-o.svg":""} /></div>
-                        <div className=" flex items-center justify-center w-[96px] h-[88px] rounded-[10px] bg-[#1F3641] shadow-[0px_4px_0px_0px_#10212A] " onClick={() => {change = [...Gamebox], change[4] = true,console.log(change) ,setGamebox([...change]),context.setPlayWith(!context.playWith)}}  ><img src={Gamebox[4] == true?context.playWith?"/images/icon-x.svg":"/images/icon-o.svg":""} /></div>
-                        <div className=" flex items-center justify-center w-[96px] h-[88px] rounded-[10px] bg-[#1F3641] shadow-[0px_4px_0px_0px_#10212A] " onClick={() => {change = [...Gamebox], change[5] = true,console.log(change) ,setGamebox([...change]),context.setPlayWith(!context.playWith)}}  ><img src={Gamebox[5] == true?context.playWith?"/images/icon-x.svg":"/images/icon-o.svg":""} /></div>
-                        <div className=" flex items-center justify-center w-[96px] h-[88px] rounded-[10px] bg-[#1F3641] shadow-[0px_4px_0px_0px_#10212A] " onClick={() => {change = [...Gamebox], change[6] = true,console.log(change) ,setGamebox([...change]),context.setPlayWith(!context.playWith)}}  ><img src={Gamebox[6] == true?context.playWith?"/images/icon-x.svg":"/images/icon-o.svg":""} /></div>
-                        <div className=" flex items-center justify-center w-[96px] h-[88px] rounded-[10px] bg-[#1F3641] shadow-[0px_4px_0px_0px_#10212A] " onClick={() => {change = [...Gamebox], change[7] = true,console.log(change) ,setGamebox([...change]),context.setPlayWith(!context.playWith)}}  ><img src={Gamebox[7] == true?context.playWith?"/images/icon-x.svg":"/images/icon-o.svg":""} /></div>
-                        <div className=" flex items-center justify-center w-[96px] h-[88px] rounded-[10px] bg-[#1F3641] shadow-[0px_4px_0px_0px_#10212A] " onClick={() => {change = [...Gamebox], change[8] = true,console.log(change) ,setGamebox([...change]),context.setPlayWith(!context.playWith)}}  ><img src={Gamebox[8] == true?context.playWith?"/images/icon-x.svg":"/images/icon-o.svg":""} /></div> */}
                         {context.Gamebox.map((item,index) => {
-                            // change = [...context.Gamebox]
-                            // console.log(change[index].used);
-                            // console.log(change[index].OX);
-
                             return(
                                 <div key={index} className={` flex items-center justify-center w-[96px] md:w-[140px] h-[88px] md:h-[132px] rounded-[10px] bg-[#1F3641]  shadow-[0px_4px_0px_0px_#10212A] md:shadow-[0px_8px_0px_0px_#10212A] bg-no-repeat bg-[length:66px_66px] bg-center ${!context.Gamebox[index] && context.playWith?' hover:bg-[url("/images/icon-x-outline.svg")] ':' hover:bg-[url("/images/icon-o-outline.svg")] '} `} onClick={() => {change = [...context.Gamebox]; change[index] = context.playWith?"/images/icon-x.svg":"/images/icon-o.svg" ;context.setGamebox([...change]),params.game =="multiplayer"?context.setPlayWith(!context.playWith):null;params.game == "sologame"?setPCmove(!PCmove):null}} ><img src={item} /></div>
                             )
